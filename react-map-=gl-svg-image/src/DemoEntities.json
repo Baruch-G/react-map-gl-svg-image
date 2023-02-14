@@ -4,9 +4,9 @@
     {
       "id": "0f75d20dc6e82b0147816f9dee9ac5c5",
       "type": "Feature",
-      "properties": { "color": "gray" },
+      "properties": { "color": "gray", "mode": "none" },
       "geometry": {
-        "coordinates": [
+        "coordinates": [  
           [
             [35.126716464905144, 30.29508195426061],
             [34.998089023011175, 30.277726992361238],
@@ -36,7 +36,7 @@
     {
       "id": "6c9adcf8924e5fbd5d2522389f228773",
       "type": "Feature",
-      "properties": { "color": "red" },
+      "properties": { "color": "red", "mode": "none" },
       "geometry": {
         "coordinates": [
           [

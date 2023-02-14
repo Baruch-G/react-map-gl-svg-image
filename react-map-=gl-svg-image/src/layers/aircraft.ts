@@ -1,7 +1,7 @@
 const aircraftLayer = {
   id: "aircraft-layer",
   type: "symbol",
-  source: "aircraft",
+  source: "aircraft-source",
   layout: {
     "icon-allow-overlap": true,
     "icon-image": "plane",

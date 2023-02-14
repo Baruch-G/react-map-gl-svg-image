@@ -1,7 +1,7 @@
-const polygonLayer = {
+const polygonFillLayer = {
   id: "polygon-layer",
   type: "fill",
-  source: "geo-entities",
+  source: "polygon-source",
   paint: {
     "fill-color": [
       "case",
@@ -9,7 +9,14 @@ const polygonLayer = {
       ["get", "color"],
       "gray",
     ],
-    "fill-opacity": 0.4,
+    "fill-opacity": [
+      "case",
+      ["==", ["feature-state", "selected"], true],
+      0.7,
+      ["==", ["feature-state", "hover"], true],
+      0.4,
+      0.2,
+    ],
   },
   filter: ["==", "$type", "Polygon"],
 };
@@ -17,9 +24,16 @@ const polygonLayer = {
 const polygonOutlineLayer = {
   id: "polygon-outline-layer",
   type: "line",
-  source: "geo-entities",
+  source: "polygon-source",
   paint: {
-    "line-width": 1,
+    "line-width": [
+      "case",
+      ["==", ["feature-state", "selected"], true],
+      4,
+      ["==", ["feature-state", "hover"], true],
+      2,
+      1,
+    ],
     "line-color": [
       "case",
       ["boolean", ["has", "color"], true],
@@ -33,7 +47,7 @@ const polygonOutlineLayer = {
 const polygonLabelLayer = {
   id: "polygon-label-layer",
   type: "symbol",
-  source: "geo-entities",
+  source: "polygon-source",
   layout: {
     "text-field": "dfdfs",
     // 'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
@@ -44,4 +58,29 @@ const polygonLabelLayer = {
   filter: ["==", "$type", "Polygon"],
 };
 
-export { polygonLayer, polygonOutlineLayer, polygonLabelLayer };
+const fooPolygin = (id : string) => {
+  return {
+    id: id,
+    type: "fill",
+    source: "polygon-source",
+    paint: {
+      "fill-color": [
+        "case",
+        ["boolean", ["has", "color"], true],
+        ["get", "color"],
+        "gray",
+      ],
+      "fill-opacity": [
+        "case",
+        ["==", ["feature-state", "selected"], true],
+        0.7,
+        ["==", ["feature-state", "hover"], true],
+        0.4,
+        0.2,
+      ],
+    },
+    filter: ["==", "$type", "Polygon"],
+  };
+}
+
+export { polygonFillLayer, polygonOutlineLayer, polygonLabelLayer, fooPolygin };

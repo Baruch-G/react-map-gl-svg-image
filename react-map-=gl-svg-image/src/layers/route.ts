@@ -1,7 +1,7 @@
 const routeLayer = {
     id: "route-layer",
     type: "line",
-    source: "geo-entities",
+    source: "route-source",
     layout: {
         'line-cap': 'round',
         'line-join': 'round'

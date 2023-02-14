@@ -1,6 +1,7 @@
 import { GeoJSONSource, useMap } from "react-map-gl";
 import "./LonLatInfo.css";
 import { useEffect, useState } from "react";
+import MapSources from "../map/sources/source";
 
 const LonLatInfo = () => {
   const { current: currMap } = useMap();
@@ -24,7 +25,7 @@ const LonLatInfo = () => {
       <p>{currMap?.getZoom()}</p>
 
       <button onClick={() => {
-        const geojsonSource = currMap?.getSource('aircraft') as GeoJSONSource;
+        const geojsonSource = currMap?.getSource(MapSources.AIRCRAFT) as GeoJSONSource;
         geojsonSource.setData({
         "type": "FeatureCollection",
         "features": []

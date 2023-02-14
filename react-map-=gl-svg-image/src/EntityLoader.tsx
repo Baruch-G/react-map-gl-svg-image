@@ -1,39 +1,68 @@
-import { useEffect } from "react";
-import { useMap, Source, Layer } from "react-map-gl";
-import demoEntities from "./DemoEntities.json";
-import pl from "./assets/aircraft.png";
-import { polygonLayer, polygonOutlineLayer, polygonLabelLayer } from "./layers/polygon";
+import { useEffect, useState } from "react";
+import {
+  useMap,
+  Source,
+  Layer,
+  MapboxGeoJSONFeature,
+  GeoJSONSource,
+} from "react-map-gl";
+import {
+  polygonFillLayer,
+  polygonOutlineLayer,
+  polygonLabelLayer,
+  fooPolygin,
+} from "./layers/polygon";
 import { pointLayer } from "./layers/point";
-import { aircraftLabelLayer, aircraftLayer } from "./layers/aicraft";
+import { aircraftLabelLayer, aircraftLayer } from "./layers/aircraft";
 import aircraft from "./assets/aircraft.svg";
 import { polylineLayer } from "./layers/polyline";
 import { routeLayer } from "./layers/route";
+import { useSelector } from "react-redux";
+import { RootState } from "./store/store";
+import { useDispatch } from "react-redux";
+import { setFeatures } from "./store/geoEntitiesReducer";
+import MapSources, { sources } from "./map/sources/source";
+import { AnyLayer } from "react-map-gl/dist/esm/types";
 
-const Aircraft = () => {
+
+const EntityLoader = () => {
+  const featureCollection = useSelector((state: RootState) => state);
   const { current: currMap } = useMap();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     let img = new Image(40, 40);
     img.onload = () => currMap?.addImage("plane", img);
     img.src = aircraft;
   }, []);
 
-  return (
-    <>
-      <Source id="geo-entities" type="geojson" data={demoEntities}>
-        <Layer {...polygonLayer} />
-        <Layer {...polygonOutlineLayer} />
-      
-        <Layer {...pointLayer} />
-        <Layer {...polylineLayer} />
-        <Layer {...routeLayer} />
-      </Source>
-      <Source id="aircraft" type="geojson" data={demoEntities}>
-        <Layer {...aircraftLayer} />
-        <Layer {...aircraftLabelLayer} />
+  currMap?.on("load", (e) => {
+    sources.forEach((source) => {
+      e.target.addSource(source.id, {
+        type: "geojson",
+        data: featureCollection.entities,
+        generateId: true,
+      });
+      source.layers.forEach((layer) => {
+        e.target.addLayer(layer as AnyLayer)
+      });
+    });
 
-      </Source>
-    </>
-  );
+    // e.target.addLayer(polygonFillLayer as AnyLayer)
+    // e.target.addLayer(polygonOutlineLayer as AnyLayer)
+
+   
+
+    // e.target.addLayer(polylineLayer as AnyLayer)
+
+    // e.target.addLayer(routeLayer as AnyLayer)
+
+    // e.target.addLayer(pointLayer as AnyLayer)
+
+    // e.target.addLayer(aircraftLayer as AnyLayer)
+  });
+
+  return <></>;
 };
 
-export default Aircraft;
+export default EntityLoader;
