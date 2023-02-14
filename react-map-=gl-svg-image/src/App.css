@@ -1,11 +1,15 @@
-body{
+body, html{
     margin: 0;
+    padding: 0;
 }
 
 .App{
   width:100vw ;
   height: 100vh;
-  overflow-y: hidden;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
+.maplibregl-control-container{
+  display: none;
+}

@@ -1,0 +1,9 @@
+
+.position-info{
+    background-color: aliceblue;
+    display: grid;
+    position: absolute;
+    right: 0;
+    width: 150px;
+    bottom: 50px;
+  }
